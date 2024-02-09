@@ -13,6 +13,6 @@ Description:
 #include <fossil/xcore/console.h>
 
 int main(int argc, char **argv) {
-    fscl_console_out("Hello, Fossil Coder!");
+    fscl_console_out("Hello, Fossil Coder!\n");
     return 0;
 } // end of func
