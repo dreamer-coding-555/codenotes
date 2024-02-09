@@ -22,6 +22,10 @@ Fossil Standard Component Libraries (FSCL) by Fossil Logic represent the epitome
 
 - **Setting a New Standard:** Fossil Logic is setting a new standard for software excellence with FSCL. Join us in raising the bar for digital solutions and creating applications that set the benchmark in the industry.
 
+## Tool Updater
+
+The Tool Updater script is a Python-based utility designed to streamline the process of updating and installing Meson and Ninja, essential build system tools. The script provides a user-friendly graphical interface, allowing users to input desired versions and receive real-time feedback through a terminal-like display. For detailed instructions on using the Tool Updater and getting the most out of its features, please refer to the [Tool Updater User Manual](MANUAL.md).
+
 ## Coder Notebook Demo Collection
 
 Explore our Coder Notebook Demo Collection to get hands-on experience with the power and versatility of FSCL. Each demo provides insights into the capabilities of these libraries and demonstrates how they can be utilized to enhance your development projects.
