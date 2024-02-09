@@ -12,6 +12,8 @@ Description:
 */
 #include <fossil/xcore/console.h>
 
+//
+// main program is where we start all commands
 int main(int argc, char **argv) {
     fscl_console_out("Hello, Fossil Coder!\n");
     return 0;
