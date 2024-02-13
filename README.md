@@ -43,6 +43,16 @@ Welcome to the Fossil Learning Platform (FLLP) Codelab Template! This template i
    - Steps to publish and share your codelab with others.
    - Tips for creating engaging and dynamic content for educational purposes.
 
+## Fossil Updater tool
+
+If you want to install a tool to help manage Meson and Ninja build installations feel free to to use our Fossil Logic Tool for managing updates Fossil Updater:
+
+```bash
+pip install git+https://github.com/dreamer-coding-555/fossil-updater.git
+```
+
+This command will download the project and install it without the need to clone the repository first.
+
 ## Conclusion:
 
 Congratulations! You have successfully completed the "Creating Dynamic Content with Fossil Logic Libraries in FLLP" codelab. Feel free to adapt this template for your own codelabs, exploring different aspects of FLLP and FLL.
