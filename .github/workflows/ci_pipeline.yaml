@@ -29,14 +29,14 @@ jobs:
         architecture: x64
     - name: Install Required Tools
       run: |
-          pip install -r .github/requirements.txt
-          python .github/dependencies.py
+           python -m pip install -r .github/requirements.txt
+           python .github/dependencies.py
     - name: Setup Build Directory
       run: |
-            python .github/fossil-tool.py setup
+           python .github/fossil-tool.py setup
     - name: Compile Source Code
       run: |
-            python .github/fossil-tool.py compile
+           python .github/fossil-tool.py compile
 
   host_windows:
     strategy:
@@ -59,14 +59,14 @@ jobs:
         update: true
     - name: Install Required Tools
       run: |
-          pip install -r .github/requirements.txt
-          python .github/dependencies.py
+           python -m pip install -r .github/requirements.txt
+           python .github/dependencies.py
     - name: Setup Build Directory
       run: |
-            python .github/fossil-tool.py setup
+           python .github/fossil-tool.py setup
     - name: Compile Source Code
       run: |
-            python .github/fossil-tool.py compile
+           python .github/fossil-tool.py compile
 
   host_ubuntu:
     strategy:
@@ -82,11 +82,11 @@ jobs:
         architecture: x64
     - name: Install Required Tools
       run: |
-          pip install -r .github/requirements.txt
-          python .github/dependencies.py
+           python -m pip install -r .github/requirements.txt
+           python .github/dependencies.py
     - name: Setup Build Directory
       run: |
-            python .github/fossil-tool.py setup
+           python .github/fossil-tool.py setup
     - name: Compile Source Code
       run: |
-            python .github/fossil-tool.py compile
+           python .github/fossil-tool.py compile
