@@ -33,13 +33,13 @@ jobs:
           brew install cppcheck
     - name: Setup Build Directory
       run: |
-            scan-build meson setup builddir
+            python .github/fossil-tool.py setup
     - name: Scan Compile Commands
       run: |
-            cppcheck --project=builddir/compile_commands.json
+            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
-            scan-build meson compile -C builddir -v
+            python .github/fossil-tool.py compile
 
   host_windows:
     strategy:
@@ -65,10 +65,13 @@ jobs:
           pip install -r .github/requirements.txt
     - name: Setup Build Directory
       run: |
-            meson setup builddir
+            python .github/fossil-tool.py setup
+    - name: Scan Compile Commands
+      run: |
+            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
-            meson compile -C builddir -v
+            python .github/fossil-tool.py compile
 
   host_ubuntu:
     strategy:
@@ -88,10 +91,10 @@ jobs:
           sudo apt-get install -y cppcheck gcc
     - name: Setup Build Directory
       run: |
-            scan-build meson setup builddir
+            python .github/fossil-tool.py setup
     - name: Scan Compile Commands
       run: |
-            cppcheck --project=builddir/compile_commands.json
+            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
-            scan-build meson compile -C builddir
+            python .github/fossil-tool.py compile
