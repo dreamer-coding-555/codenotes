@@ -29,7 +29,7 @@ jobs:
         architecture: x64
     - name: Install Meson Build System
       run: |
-          pip install meson==1.0.0 ninja==1.11.1 scan-build
+          pip install -r .github/requirements.txt
           brew install cppcheck
     - name: Setup Build Directory
       run: |
@@ -62,7 +62,7 @@ jobs:
         update: true
     - name: Install Meson Build System
       run: |
-          pip install meson==1.0.0 ninja==1.11.1
+          pip install -r .github/requirements.txt
     - name: Setup Build Directory
       run: |
             meson setup builddir
@@ -84,7 +84,7 @@ jobs:
         architecture: x64
     - name: Install Meson Build System
       run: |
-          pip install meson==1.0.0 ninja==1.11.1 scan-build
+          pip install -r .github/requirements.txt
           sudo apt-get install -y cppcheck gcc
     - name: Setup Build Directory
       run: |
