@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import platform
 
 def run_command(command):
     try:
@@ -14,11 +15,17 @@ def setup():
     run_command(setup_command)
 
 def compile():
-    compile_command = "meson compile -C builddir -v"
-    run_command(compile_command)
+    if platform.system() != 'Windows':
+        # Execute scan-build only if not on Windows
+        scan_build_command = "scan-build meson compile -C builddir"
+        run_command(scan_build_command)
+    else:
+        # On Windows, execute regular meson compile
+        compile_command = "meson compile -C builddir"
+        run_command(compile_command)
 
 def test():
-    test_command = "meson test -C builddir -v"
+    test_command = "meson test -C builddir"
     run_command(test_command)
 
 def main():
