@@ -27,16 +27,13 @@ jobs:
       with:
         python-version: '3.10'
         architecture: x64
-    - name: Install Meson Build System
+    - name: Install Required Tools
       run: |
           pip install -r .github/requirements.txt
-          brew install cppcheck
+          python .github/dependencies.py
     - name: Setup Build Directory
       run: |
             python .github/fossil-tool.py setup
-    - name: Scan Compile Commands
-      run: |
-            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
             python .github/fossil-tool.py compile
@@ -60,15 +57,13 @@ jobs:
       with:
         msystem: ${{ matrix.mingw }}
         update: true
-    - name: Install Meson Build System
+    - name: Install Required Tools
       run: |
           pip install -r .github/requirements.txt
+          python .github/dependencies.py
     - name: Setup Build Directory
       run: |
             python .github/fossil-tool.py setup
-    - name: Scan Compile Commands
-      run: |
-            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
             python .github/fossil-tool.py compile
@@ -85,16 +80,13 @@ jobs:
       with:
         python-version: '3.10'
         architecture: x64
-    - name: Install Meson Build System
+    - name: Install Required Tools
       run: |
           pip install -r .github/requirements.txt
-          sudo apt-get install -y cppcheck gcc
+          python .github/dependencies.py
     - name: Setup Build Directory
       run: |
             python .github/fossil-tool.py setup
-    - name: Scan Compile Commands
-      run: |
-            python .github/fossil-tool.py scan
     - name: Compile Source Code
       run: |
             python .github/fossil-tool.py compile
