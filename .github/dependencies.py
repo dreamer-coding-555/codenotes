@@ -43,7 +43,8 @@ def install_mono():
 def install_java():
     if platform.system() == 'Linux':
         run_command("sudo apt-get install -y default-jdk")
-    # Handle other platforms as needed
+    elif platform.system() == 'Darwin':  # macOS
+        run_command("brew install openjdk")
 
 def main():
     print("Installing GCC and G++...")
