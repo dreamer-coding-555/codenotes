@@ -1,7 +1,6 @@
-name: CI Process
+name: Host System Tester
 
 on:
-  push:
   pull_request:
     branches:
       - "main"
@@ -9,67 +8,83 @@ on:
       - "**.c"
       - "**.h"
       - "**.py"
-      - "**.pyx"
-      - "**.rs"
+      - "**.pyx"  # Added for Cython files
+      - "**.rs"   # Added for Rust files
       - "**.build"
 
 permissions:
   contents: read
 
-jobs:
-  common_steps:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
-        architecture: x64
-    - name: Install Required Tools
-      run: |
-        python -m pip install -r .github/requirements.txt
-        python .github/dependencies.py
+env:
+  MESON_VERSION: '1.3.0'  # Set your desired Meson version
+  NINJA_VERSION: '1.11.1'  # Set your desired Ninja version
+  BUILD_DIR_VERSION: 'builddir'  # Set your desired build directory version
 
+jobs:
   host_macosx:
-    needs: common_steps
     strategy:
       matrix:
-        os: [10.15, 11, 12, 13]
+        os: [10.15, 11, 12, 13]  # macOS versions
     runs-on: macos-latest
     steps:
-    - name: Setup Project Code
-      run: meson setup builddir
-    - name: Setup Project Code
-      run: meson compile -C builddir -v
+    - uses: actions/checkout@v4
+    - name: Setup Python and Tools
+      run: |
+          pip install meson==${MESON_VERSION} ninja==${NINJA_VERSION} scan-build
+    - name: Setup Build Directory
+      run: |
+          scan-build meson setup builddir-${BUILD_DIR_VERSION} -Dwith_test=enabled
+    - name: Compile Source Code
+      run: |
+          scan-build meson compile -C builddir-${BUILD_DIR_VERSION} -v
+    - name: Test Project Code
+      run: |
+          scan-build meson test -C builddir-${BUILD_DIR_VERSION} -v
 
   host_windows:
-    needs: common_steps
     strategy:
       matrix:
         os: ['windows-latest', 'windows-2022']
         mingw: [false, 'mingw32', 'mingw64', 'MSYS']
     runs-on: ${{ matrix.os }}
     steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python and Tools
+      run: |
+          pip install meson==${MESON_VERSION} ninja==${NINJA_VERSION}
     - name: Setup MinGW/MSYS
       if: matrix.mingw != false
       uses: msys2/setup-msys2@v2
       with:
         msystem: ${{ matrix.mingw }}
         update: true
-    - name: Setup Project Code
-      run: meson setup builddir
-    - name: Setup Project Code
-      run: meson compile -C builddir -v
+    - name: Setup Build Directory
+      run: |
+          meson setup builddir-${BUILD_DIR_VERSION} -Dwith_test=enabled
+    - name: Compile Source Code
+      run: |
+          meson compile -C builddir-${BUILD_DIR_VERSION} -v
+    - name: Test Project Code
+      run: |
+          meson test -C builddir-${BUILD_DIR_VERSION} -v
 
   host_ubuntu:
-    needs: common_steps
     strategy:
       matrix:
         ubuntu_version: ['latest', '22.04']
     runs-on: ubuntu-${{ matrix.ubuntu_version }}
     steps:
-    - name: Setup Project Code
-      run: meson setup builddir
-    - name: Setup Project Code
-      run: meson compile -C builddir -v
+    - uses: actions/checkout@v4
+    - name: Setup Python and Tools
+      run: |
+          pip install meson==${MESON_VERSION} ninja==${NINJA_VERSION} scan-build
+          sudo apt-get install -y gcc
+    - name: Setup Build Directory
+      run: |
+          scan-build meson setup builddir-${BUILD_DIR_VERSION} -Dwith_test=enabled
+    - name: Compile Source Code
+      run: |
+          scan-build meson compile -C builddir-${BUILD_DIR_VERSION}
+    - name: Test Project Code
+      run: |
+          scan-build meson test -C builddir-${BUILD_DIR_VERSION} -v
