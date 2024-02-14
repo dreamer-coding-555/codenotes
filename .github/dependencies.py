@@ -23,8 +23,7 @@ def install_rust():
     if platform.system() == 'Linux':
         run_command("sudo apt install -y rustc cargo")
     elif platform.system() == 'Darwin':
-        run_command("/bin/bash -c \"$(curl -fsSL https://sh.rustup.rs)\"")
-        run_command("export PATH=\"$HOME/.cargo/bin:$PATH\"")
+        run_command("brew install rust")
     elif platform.system() == 'Windows':
         run_command("choco install rust")
 
