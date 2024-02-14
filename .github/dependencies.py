@@ -27,40 +27,12 @@ def install_rust():
     elif platform.system() == 'Windows':
         run_command("choco install rust")
 
-def install_gdc():
-    if platform.system() == 'Linux':
-        run_command("sudo apt-get install -y gdc")
-    # Handle other platforms as needed
-
-def install_mono():
-    if platform.system() == 'Linux':
-        run_command("sudo apt-get install -y mono-devel")
-    elif platform.system() == 'Darwin':
-        run_command("brew install mono")
-    elif platform.system() == 'Windows':
-        run_command("choco install mono")
-
-def install_java():
-    if platform.system() == 'Linux':
-        run_command("sudo apt-get install -y default-jdk")
-    elif platform.system() == 'Darwin':  # macOS
-        run_command("brew install openjdk")
-
 def main():
     print("Installing GCC and G++...")
     install_gcc_gpp()
 
     print("\nInstalling Rust...")
     install_rust()
-
-    print("\nInstalling GDC (D Compiler)...")
-    install_gdc()
-
-    print("\nInstalling Mono (C#)...")
-    install_mono()
-
-    print("\nInstalling Java...")
-    install_java()
 
     print("\nInstallation completed successfully!")
 
