@@ -20,8 +20,11 @@ def install_gcc_gpp():
         run_command("choco install mingw")
 
 def install_rust():
-    if platform.system() == 'Linux' or platform.system() == 'Darwin':
-        run_command("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+    if platform.system() == 'Linux':
+        run_command("sudo apt install -y rustc cargo")
+    elif platform.system() == 'Darwin':
+        run_command("/bin/bash -c \"$(curl -fsSL https://sh.rustup.rs)\"")
+        run_command("export PATH=\"$HOME/.cargo/bin:$PATH\"")
     elif platform.system() == 'Windows':
         run_command("choco install rust")
 
@@ -43,9 +46,6 @@ def install_java():
         run_command("sudo apt-get install -y default-jdk")
     # Handle other platforms as needed
 
-def install_cython():
-    run_command("python -m pip install cython")
-
 def main():
     print("Installing GCC and G++...")
     install_gcc_gpp()
@@ -61,9 +61,6 @@ def main():
 
     print("\nInstalling Java...")
     install_java()
-
-    print("\nInstalling Cython...")
-    install_cython()
 
     print("\nInstallation completed successfully!")
 
