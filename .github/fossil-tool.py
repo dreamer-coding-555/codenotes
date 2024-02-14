@@ -11,22 +11,22 @@ def run_command(command):
         sys.exit(1)
 
 def setup():
-    setup_command = "meson setup ../builddir -v"
-    run_command(setup_command)
+    run_command("cd ..")
+    run_command("meson setup builddir -v")
 
 def compile():
     if platform.system() != 'Windows':
         # Execute scan-build only if not on Windows
-        scan_build_command = "scan-build meson compile -C ../builddir -v"
-        run_command(scan_build_command)
+        run_command("cd ..")
+        run_command("scan-build meson compile -C builddir -v")
     else:
         # On Windows, execute regular meson compile
-        compile_command = "meson compile -C ../builddir -v"
-        run_command(compile_command)
+        run_command("cd ..")
+        run_command("meson compile -C builddir -v")
 
 def test():
-    test_command = "meson test -C ../builddir -v"
-    run_command(test_command)
+    run_command("cd ..")
+    run_command("meson test -C builddir -v")
 
 def main():
     if len(sys.argv) != 2:
