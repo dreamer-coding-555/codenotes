@@ -9,6 +9,8 @@ on:
       - "**.c"
       - "**.h"
       - "**.py"
+      - "**.pyx"
+      - "**.rs"
       - "**.build"
 
 permissions:
@@ -28,9 +30,6 @@ jobs:
       run: |
         python -m pip install -r .github/requirements.txt
         python .github/dependencies.py
-    - name: Setup Build Directory
-      run: |
-        python .github/fossil-tool.py setup
 
   host_macosx:
     needs: common_steps
@@ -39,8 +38,10 @@ jobs:
         os: [10.15, 11, 12, 13]
     runs-on: macos-latest
     steps:
-    - name: Compile Source Code
-      run: python .github/fossil-tool.py compile
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
 
   host_windows:
     needs: common_steps
@@ -56,8 +57,10 @@ jobs:
       with:
         msystem: ${{ matrix.mingw }}
         update: true
-    - name: Compile Source Code
-      run: python .github/fossil-tool.py compile
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
 
   host_ubuntu:
     needs: common_steps
@@ -66,5 +69,7 @@ jobs:
         ubuntu_version: ['latest', '22.04']
     runs-on: ubuntu-${{ matrix.ubuntu_version }}
     steps:
-    - name: Compile Source Code
-      run: python .github/fossil-tool.py compile
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
