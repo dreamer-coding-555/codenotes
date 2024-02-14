@@ -25,7 +25,6 @@ Welcome to the Fossil Learning Platform (FLLP) Codelab Template! This template i
 2. **Setting Up the Codelab Environment:**
    - Meson build system setup: `meson setup builddir`.
    - Compilation of the codelab project: `meson compile -C builddir`.
-   - If you don't have Meson build yet be sure to run `download.py` to run a download GUI.
 
 3. **Creating Custom Libraries with FLL:**
    - Steps to define and create custom libraries using FLL.
