@@ -1,14 +1,17 @@
-name: CI Pipeline
+name: CI Process
 
 on:
   push:
-    branches:
-      - "main"
   pull_request:
     branches:
       - "main"
     paths:
-      - "**.{c,h,py,pyx,rs,build}"  # Simplified path specification
+      - "**.c"
+      - "**.h"
+      - "**.py"
+      - "**.pyx"
+      - "**.rs"
+      - "**.build"
 
 permissions:
   contents: read
@@ -25,12 +28,8 @@ jobs:
         architecture: x64
     - name: Install Required Tools
       run: |
-          python -m pip install -r .github/requirements.txt
-          python .github/dependencies.py
-    - name: Setup and Compile Project Code
-      run: |
-          meson setup builddir
-          meson compile -C builddir -v
+        python -m pip install -r .github/requirements.txt
+        python .github/dependencies.py
 
   host_macosx:
     needs: common_steps
@@ -38,13 +37,11 @@ jobs:
       matrix:
         os: [10.15, 11, 12, 13]
     runs-on: macos-latest
-
-  host_ubuntu:
-    needs: common_steps
-    strategy:
-      matrix:
-        ubuntu_version: ['latest', '22.04']
-    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    steps:
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
 
   host_windows:
     needs: common_steps
@@ -60,3 +57,19 @@ jobs:
       with:
         msystem: ${{ matrix.mingw }}
         update: true
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
+
+  host_ubuntu:
+    needs: common_steps
+    strategy:
+      matrix:
+        ubuntu_version: ['latest', '22.04']
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    steps:
+    - name: Setup Project Code
+      run: meson setup builddir
+    - name: Setup Project Code
+      run: meson compile -C builddir -v
