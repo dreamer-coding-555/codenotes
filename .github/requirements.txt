@@ -1,3 +1,4 @@
 meson==1.0.0
 ninja==1.11.1
 scan-build==2.0.20
+cython==3.0.8
